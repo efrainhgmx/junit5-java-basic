@@ -10,12 +10,12 @@ public class Cuenta {
         return persona;
     }
 
-    public BigDecimal getSaldo() {
-        return saldo;
-    }
-
     public void setPersona(String persona) {
         this.persona = persona;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
     }
 
     public void setSaldo(BigDecimal saldo) {
