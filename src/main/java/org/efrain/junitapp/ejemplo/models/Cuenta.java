@@ -6,7 +6,7 @@ public class Cuenta {
     private String persona;
     private BigDecimal saldo;
 
-    public Cuenta(BigDecimal saldo, String persona) {
+    public Cuenta(String persona, BigDecimal saldo) {
         this.saldo = saldo;
         this.persona = persona;
     }

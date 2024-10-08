@@ -11,11 +11,20 @@ class CuentaTest {
 
     @Test
     void testNombreCuenta() {
-        Cuenta cuenta = new Cuenta(new BigDecimal("10005.45"),"Efrain");
+        Cuenta cuenta = new Cuenta("Efrain", new BigDecimal("10005.45"));
         String esperado = "Efrain";
         String real = cuenta.getPersona();
         //Assertions.assertEquals(esperado, real);
         assertEquals(esperado, real);
         assertTrue(real.equals("Efrain"));
+    }
+
+    @Test
+    void testSaldoCuenta() {
+        Cuenta cuenta = new Cuenta("Efrain", new BigDecimal("10005.12345"));
+        assertEquals(10005.12345, cuenta.getSaldo().doubleValue());
+        assertFalse(cuenta.getSaldo().compareTo(BigDecimal.ZERO) < 0);
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+
     }
 }
