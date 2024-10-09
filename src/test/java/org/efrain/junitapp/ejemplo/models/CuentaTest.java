@@ -92,20 +92,29 @@ class CuentaTest {
         banco.setNombre("Banko");
         banco.tranferir(cuentaOrigen, cuentaDestino, new BigDecimal(1500));
 
-        assertEquals("6500.00", cuentaDestino.getSaldo().toPlainString());
-        assertEquals("1000.00", cuentaOrigen.getSaldo().toPlainString());
+        assertAll(() -> {
+                    assertEquals("Andres Doe", banco.getCuentas().stream().filter(cuenta -> cuenta.getPersona().equals("Andres Doe"))
+                            .findFirst()
+                            .get()
+                            .getPersona());
+                },
+                () -> {
+                    assertEquals("6500.00", cuentaDestino.getSaldo().toPlainString());
+                },
+                () -> {
+                    assertEquals("1000.00", cuentaOrigen.getSaldo().toPlainString());
+                },
+                () -> {
+                    assertEquals(2, banco.getCuentas().size());
 
-        assertEquals(2, banco.getCuentas().size());
-        assertEquals("Banko", cuentaOrigen.getBanco().getNombre());
-        assertEquals("Andres Doe", banco.getCuentas().stream().filter(cuenta -> cuenta.getPersona().equals("Andres Doe"))
-                .findFirst()
-                .get()
-                .getPersona());
+                },
+                () -> {
+                    assertEquals("Banco", cuentaOrigen.getBanco().getNombre());
 
-        assertTrue(banco.getCuentas().stream().filter(cuenta -> cuenta.getPersona().equals("Andres Doe"))
-                .findFirst().isPresent());
-
-        assertTrue(banco.getCuentas().stream()
-                .anyMatch(cuenta -> cuenta.getPersona().equals("Andres Doe")));
+                },
+                () -> {
+                    assertTrue(banco.getCuentas().stream()
+                            .anyMatch(cuenta -> cuenta.getPersona().equals("Andres Doe")));
+                });
     }
 }
