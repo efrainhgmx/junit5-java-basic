@@ -1,5 +1,6 @@
 package org.efrain.junitapp.ejemplo.models;
 
+import org.efrain.junitapp.ejemplo.exceptions.DineroInsuficienteException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -53,5 +54,17 @@ class CuentaTest {
         assertNotNull(cuenta.getSaldo());
         assertEquals(1100, cuenta.getSaldo().intValue());
         assertEquals("1100.00", cuenta.getSaldo().toPlainString());
+    }
+
+    @Test
+    void testDineroInsuficienteExceptionCuenta() {
+        Cuenta cuenta = new Cuenta("Efrain H", new BigDecimal("1000.00"));
+        Exception exception = assertThrows(DineroInsuficienteException.class, () -> {
+            cuenta.debito(new BigDecimal(1001));
+        });
+        String real = exception.getMessage();
+        String esperado = "Dinero insuficiente";
+
+        assertEquals(esperado, real);
     }
 }
