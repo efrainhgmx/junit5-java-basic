@@ -36,4 +36,22 @@ class CuentaTest {
         //assertNotEquals(cuentaDos, cuenta);
         assertEquals(cuentaDos, cuenta);
     }
+
+    @Test
+    void testDebitoCuenta() {
+        Cuenta cuenta = new Cuenta("Efrain H", new BigDecimal("1000.00"));
+        cuenta.debito(new BigDecimal(100));
+        assertNotNull(cuenta.getSaldo());
+        assertEquals(900, cuenta.getSaldo().intValue());
+        assertEquals("900.00", cuenta.getSaldo().toPlainString());
+    }
+
+    @Test
+    void testCreditoCuenta() {
+        Cuenta cuenta = new Cuenta("Efrain H", new BigDecimal("1000.00"));
+        cuenta.credito(new BigDecimal(100));
+        assertNotNull(cuenta.getSaldo());
+        assertEquals(1100, cuenta.getSaldo().intValue());
+        assertEquals("1100.00", cuenta.getSaldo().toPlainString());
+    }
 }
