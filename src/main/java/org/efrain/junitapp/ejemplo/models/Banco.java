@@ -1,11 +1,16 @@
 package org.efrain.junitapp.ejemplo.models;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Banco {
     private String nombre;
     private List<Cuenta> cuentas;
+
+    public Banco() {
+        this.cuentas = new ArrayList<>();
+    }
 
     public List<Cuenta> getCuentas() {
         return cuentas;
@@ -30,5 +35,6 @@ public class Banco {
 
     public void addCuenta(Cuenta cuenta){
         cuentas.add(cuenta);
+        cuenta.setBanco(this);
     }
 }
