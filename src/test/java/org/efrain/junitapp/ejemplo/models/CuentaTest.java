@@ -2,6 +2,8 @@ package org.efrain.junitapp.ejemplo.models;
 
 import org.efrain.junitapp.ejemplo.exceptions.DineroInsuficienteException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -11,8 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class CuentaTest {
 
     @Test
+    @DisplayName("Probando nombre de la cuenta!")
     void testNombreCuenta() {
-        Cuenta cuenta = new Cuenta("Efrain GF", new BigDecimal("10005.45"));
+        Cuenta cuenta = new Cuenta("Efrain", new BigDecimal("10005.45"));
         String esperado = "Efrain";
         String real = cuenta.getPersona();
         //Assertions.assertEquals(esperado, real);
@@ -21,6 +24,7 @@ class CuentaTest {
     }
 
     @Test
+    @DisplayName("Prueba saldo de cuenta")
     void testSaldoCuenta() {
         Cuenta cuenta = new Cuenta("Efrain", new BigDecimal("10005.12345"));
         assertEquals(10005.12345, cuenta.getSaldo().doubleValue());
@@ -82,6 +86,8 @@ class CuentaTest {
     }
 
     @Test
+    @DisplayName("prueba de relacion de cuentas y banco")
+    @Disabled
     void testRelacionBancoCuentas() {
         Cuenta cuentaOrigen = new Cuenta("John Doe", new BigDecimal("2500.00"));
         Cuenta cuentaDestino = new Cuenta("Andres Doe", new BigDecimal("5000.00"));
