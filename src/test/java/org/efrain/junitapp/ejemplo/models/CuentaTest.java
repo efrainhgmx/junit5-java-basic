@@ -12,12 +12,12 @@ class CuentaTest {
 
     @Test
     void testNombreCuenta() {
-        Cuenta cuenta = new Cuenta("Efrain", new BigDecimal("10005.45"));
+        Cuenta cuenta = new Cuenta("Efrain GF", new BigDecimal("10005.45"));
         String esperado = "Efrain";
         String real = cuenta.getPersona();
         //Assertions.assertEquals(esperado, real);
-        assertEquals(esperado, real);
-        assertTrue(real.equals("Efrain"));
+        assertEquals(esperado, real, () -> "El nombre en cuenta no es el que se esperaba: Se esperaba " + esperado);
+        assertTrue(real.equals("Efrain"), () -> "Nombre esperado debe ser igual al real");
     }
 
     @Test
@@ -109,7 +109,7 @@ class CuentaTest {
 
                 },
                 () -> {
-                    assertEquals("Banco", cuentaOrigen.getBanco().getNombre());
+                    assertEquals("Banko", cuentaOrigen.getBanco().getNombre());
 
                 },
                 () -> {
