@@ -80,6 +80,7 @@ class CuentaTest {
         }
     }
 
+    @Tag("cuenta")
     @Nested
     class CuentaOperacionesTest {
 
@@ -182,6 +183,7 @@ class CuentaTest {
 
     }
 
+    @Tag("java")
     @Nested
     class JavaTest {
 
@@ -201,6 +203,7 @@ class CuentaTest {
         }
     }
 
+    @Tag("system")
     @Nested
     class SytemPropertyTest{
 
@@ -249,6 +252,7 @@ class CuentaTest {
 
 
     @Test
+    @Tag("cuenta")
     void testSaldoCuentaDev() {
         boolean isDev = "dev".equals((System.getProperty("ENV")));
         assumeTrue(isDev);
@@ -273,8 +277,14 @@ class CuentaTest {
         assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
     }
 
+    /*
+    * @Tag permite etiquetar metodos y clases
+    * al poner en la clase, todos lo metodos heredan la etiqueta
+    * Se puede tener mas de una etiqueta
+    * */
+    @Tag("params")
     @Nested
-    class ParametrizedTest{
+    class PruebasParametrizedTest{
 
         /*
         * Reemplaza Test por RepeatTest y ejecuta n veces el test*/
