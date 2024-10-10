@@ -302,10 +302,23 @@ class CuentaTest {
         assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
     }
 
+    /*
+    * Se pueden pasar mas valores separados por , dentro del ""
+    * */
+    @DisplayName("Params Debito Source2")
+    @ParameterizedTest(name = "numero {index} test valor {argumentsWithNames}")
+    @CsvSource({ "200.00,100.00", "250.00,200.00", "510.00,500.00", "1000.00,950.00" })
+    void testDebitoCuentaParametrizedSource(String saldo,String monto) {
+        cuenta.setSaldo(new BigDecimal(saldo));
+        cuenta.debito(new BigDecimal(monto));
+        assertNotNull(cuenta.getSaldo());
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+    }
+
     @DisplayName("Params Debito Source")
     @ParameterizedTest(name = "numero {index} test valor {argumentsWithNames}")
     @CsvSource({ "100.00", "200.00", "500.00", "950.00" })
-    void testDebitoCuentaParametrizedSource(String monto) {
+    void testDebitoCuentaParametrizedSourceDos(String monto) {
         cuenta.debito(new BigDecimal(monto));
         assertNotNull(cuenta.getSaldo());
         assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
