@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CuentaTest {
@@ -211,5 +212,30 @@ class CuentaTest {
     @Test
     @EnabledIfEnvironmentVariable(named = "NUMBER_OF_PROCESSORS", matches = "4")
     void testNumberOfProccesors() {
+    }
+
+    @Test
+    void testSaldoCuentaDev() {
+        boolean isDev = "dev".equals((System.getProperty("ENV")));
+        assumeTrue(isDev);
+        assertEquals(1000.00, cuenta.getSaldo().doubleValue());
+        assertFalse(cuenta.getSaldo().compareTo(BigDecimal.ZERO) < 0);
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+
+    }
+
+    /*
+    *assumigThat ejecuta las pruebas solo si se cumple la condicion bolean
+    *  */
+    @Test
+    void testSaldoCuentaDevDOS() {
+        boolean isDev = "dev".equals((System.getProperty("ENV")));
+        assumingThat(isDev, () -> {
+            assertEquals(1000.00, cuenta.getSaldo().doubleValue());
+            assertFalse(cuenta.getSaldo().compareTo(BigDecimal.ZERO) < 0);
+            assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+        });
+        assertFalse(cuenta.getSaldo().compareTo(BigDecimal.ZERO) < 0);
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
     }
 }
