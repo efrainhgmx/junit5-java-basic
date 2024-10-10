@@ -267,4 +267,19 @@ class CuentaTest {
         assertFalse(cuenta.getSaldo().compareTo(BigDecimal.ZERO) < 0);
         assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
     }
+
+
+    /*
+    * Reemplaza Test por RepeatTest y ejecuta n veces el test*/
+    @DisplayName("Repeticion debitCuenta")
+    @RepeatedTest(value = 5, name = "Repeticion numero: {currentRepetition} de {totalRepetitions}")
+    void testDebitoCuentaRepited(RepetitionInfo info) {
+        if(info.getCurrentRepetition() == 3) {
+            System.out.println("Es la repeticion: " + info.getCurrentRepetition());
+        }
+        cuenta.debito(new BigDecimal(100));
+        assertNotNull(cuenta.getSaldo());
+        assertEquals(900, cuenta.getSaldo().intValue());
+        assertEquals("900.00", cuenta.getSaldo().toPlainString());
+    }
 }
