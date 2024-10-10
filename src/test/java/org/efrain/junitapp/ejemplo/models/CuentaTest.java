@@ -3,6 +3,8 @@ package org.efrain.junitapp.ejemplo.models;
 import org.efrain.junitapp.ejemplo.exceptions.DineroInsuficienteException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -281,5 +283,19 @@ class CuentaTest {
         assertNotNull(cuenta.getSaldo());
         assertEquals(900, cuenta.getSaldo().intValue());
         assertEquals("900.00", cuenta.getSaldo().toPlainString());
+    }
+
+    /*
+     * Reemplaza Test por ParametraziedTest y ejecuta n veces el test
+     * con cada uno de los paramtros, teniendo un comportamiento
+     * distinto
+     * */
+    @ParameterizedTest(name = "numero {index} test valor {argumentsWithNames}")
+    @ValueSource(strings = { "100.00", "200.00", "500.00", "950.00" })
+    @DisplayName("Params Debito")
+    void testDebitoCuentaParametrized(String monto) {
+        cuenta.debito(new BigDecimal(monto));
+        assertNotNull(cuenta.getSaldo());
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
     }
 }
