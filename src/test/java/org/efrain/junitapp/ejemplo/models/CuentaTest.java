@@ -19,11 +19,21 @@ import static org.junit.jupiter.api.Assumptions.*;
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CuentaTest {
     Cuenta cuenta;
+    private TestInfo testInfo;
+    private TestReporter testReporter;
 
     @BeforeEach
-    void initMetodoTescuenta () {
+    //*TestInfo brinda info del test en este caso por cada metodo
+    void initMetodoTescuenta (TestInfo testInfo, TestReporter testReporter) {
+            this.testInfo = testInfo;
+            this.testReporter =  testReporter;
             cuenta = new Cuenta("Efrain", new BigDecimal("1000.00"));
             System.out.println("Iniciando el metodo");
+            System.out.println("Ejecutando... " + testInfo.getDisplayName() +
+                " " + testInfo.getTestMethod().get().getName() + " con las tags: " + testInfo.getTags());
+            //*Ejecuta en la salida del reporte de JUnit
+            testReporter.publishEntry("Ejecutando... " + testInfo.getDisplayName() +
+                    " " + testInfo.getTestMethod().get().getName() + " con las tags: " + testInfo.getTags());
     }
 
     @AfterEach
@@ -54,7 +64,8 @@ class CuentaTest {
     class CuentaNombreSaldo {
         @Test
         @DisplayName("Probando nombre de la cuenta!")
-        void testNombreCuenta() {
+        @Tag("cuenta")
+        void testNombreCuenta(TestInfo testInfo, TestReporter testReporter) {
             String esperado = "Efrain";
             String real = cuenta.getPersona();
             //Assertions.assertEquals(esperado, real);
