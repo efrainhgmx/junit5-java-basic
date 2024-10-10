@@ -7,12 +7,13 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CuentaTest {
     Cuenta cuenta;
 
     @BeforeEach
     void initMetodoTescuenta () {
-            cuenta = new Cuenta("Efrain", new BigDecimal("10005.45"));
+            cuenta = new Cuenta("Efrain", new BigDecimal("1000.00"));
             System.out.println("Iniciando el metodo");
     }
 
@@ -21,10 +22,19 @@ class CuentaTest {
         System.out.println("Finalizando!");
     }
 
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println("Inicializando el test");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println("Finalizando test");
+    }
+
     @Test
     @DisplayName("Probando nombre de la cuenta!")
     void testNombreCuenta() {
-        cuenta = new Cuenta("Efrain", new BigDecimal("10005.45"));
         String esperado = "Efrain";
         String real = cuenta.getPersona();
         //Assertions.assertEquals(esperado, real);
@@ -35,7 +45,7 @@ class CuentaTest {
     @Test
     @DisplayName("Prueba saldo de cuenta")
     void testSaldoCuenta() {
-        assertEquals(10005.12345, cuenta.getSaldo().doubleValue());
+        assertEquals(1000.00, cuenta.getSaldo().doubleValue());
         assertFalse(cuenta.getSaldo().compareTo(BigDecimal.ZERO) < 0);
         assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
 
