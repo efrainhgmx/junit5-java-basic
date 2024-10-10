@@ -2,8 +2,10 @@ package org.efrain.junitapp.ejemplo.models;
 
 import org.efrain.junitapp.ejemplo.exceptions.DineroInsuficienteException;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 
 import java.math.BigDecimal;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,7 +55,7 @@ class CuentaTest {
 
     @Test
     void testReferenciaCuenta() {
-        Cuenta cuentaDos =  new Cuenta("John Doe", new BigDecimal("8900.9997"));
+        Cuenta cuentaDos =  new Cuenta("Efrain", new BigDecimal("1000.00"));
 
         //assertNotEquals(cuentaDos, cuenta);
         assertEquals(cuentaDos, cuenta);
@@ -136,5 +138,61 @@ class CuentaTest {
                     assertTrue(banco.getCuentas().stream()
                             .anyMatch(cuenta -> cuenta.getPersona().equals("Andres Doe")));
                 });
+    }
+
+    @Test
+    @EnabledOnOs(OS.WINDOWS)
+    void testSoloWindows() {
+    }
+
+    @Test
+    @EnabledOnOs({OS.MAC, OS.LINUX})
+    void testSoloLinuxMac() {
+    }
+
+    @Test
+    @DisabledOnOs({OS.WINDOWS})
+    void testNoWindows() {
+    }
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_8)
+    void testSoloJava8() {
+    }
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_17)
+    void testSoloJava17() {
+    }
+
+    @Test
+    @DisabledOnJre(JRE.JAVA_17)
+    void testNOJava17() {
+    }
+
+    @Test
+    void testSystemProperties() {
+        Properties properties = System.getProperties();
+        properties.forEach( (k, v) -> System.out.println(k + " : " + v));
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "java.version", matches = "17.0.1")
+    void testJavaVersion() {
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "os.arch", matches = ".*64.*")
+    void testSolo64() {
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named = "os.arch", matches = ".*32.*")
+    void testNo64() {
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "ENV", matches = "dev")
+    void testEnvdev() {
     }
 }
