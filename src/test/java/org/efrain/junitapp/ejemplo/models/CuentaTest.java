@@ -4,11 +4,14 @@ import org.efrain.junitapp.ejemplo.exceptions.DineroInsuficienteException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -297,5 +300,38 @@ class CuentaTest {
         cuenta.debito(new BigDecimal(monto));
         assertNotNull(cuenta.getSaldo());
         assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+    }
+
+    @DisplayName("Params Debito Source")
+    @ParameterizedTest(name = "numero {index} test valor {argumentsWithNames}")
+    @CsvSource({ "100.00", "200.00", "500.00", "950.00" })
+    void testDebitoCuentaParametrizedSource(String monto) {
+        cuenta.debito(new BigDecimal(monto));
+        assertNotNull(cuenta.getSaldo());
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+    }
+/*
+* El file debe estar si o si en src/main/resources
+* */
+    @DisplayName("Params Debito FileSource")
+    @ParameterizedTest(name = "numero {index} test valor {argumentsWithNames}")
+    @CsvFileSource(resources = { "/data.csv"})
+    void testDebitoCuentaParametrizeFiledSource(String monto) {
+        cuenta.debito(new BigDecimal(monto));
+        assertNotNull(cuenta.getSaldo());
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+    }
+
+    @DisplayName("Params Debito MethodSource")
+    @ParameterizedTest(name = "numero {index} test valor {argumentsWithNames}")
+    @MethodSource("montoList")
+    void testDebitoCuentaParametrizeMethodSource(String monto) {
+        cuenta.debito(new BigDecimal(monto));
+        assertNotNull(cuenta.getSaldo());
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+    }
+
+    private static List<String> montoList(){
+        return Arrays.asList("100.00", "200.00", "500.00", "950.00");
     }
 }
